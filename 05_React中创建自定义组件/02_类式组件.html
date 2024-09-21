@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JSX 小练习</title>
+  <style>
+    .title{
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<div id="test"></div>
+
+<!--引入react核心库-->
+<script src="../js/react.development.js"></script>
+<!--引入react-dom，用于支持react渲染DOM元素-->
+<script src="../js/react-dom.development.js"></script>
+<!--引入babel，将es6代码转为es5代码。将jsx转换为js-->
+<script src="../js/babel.min.js"></script>
+
+<!--这里一定要写text/babel，否则babel无法识别jsx语法-->
+<script type="text/babel">
+    //1.创建类式组件
+    /*
+    * 1.必须使用React.Component
+    * 2.必须使用render函数
+    * 3.render函数必须返回虚拟DOM，就是说有return
+    * */
+  class MyComponent extends React.Component{
+    render(){
+      console.log('MyComponent', this) //this是组件对象，里面有render函数，render函数返回虚拟DOM。有些东西是React提供的
+      return <h2 className="title">我是类式组件</h2>
+    }
+  }
+  //2.渲染组件到页面 MyComponent需要大写，如果不写的话，React会认为这个是标签，而不是组件
+  ReactDOM.render(<MyComponent />, document.getElementById('test'))
+    /*
+    * 1.React解析组件标签，找到了MyComponent组件
+    * 2.发现组件是使用类定义的，随后new出来该类的实例，是React帮忙做的。，就new MyComponent()，生成一个组件对象
+    * 将render返回的虚拟DOM转换成真实DOM，随后呈现到页面中
+    *
+    * */
+</script>
+
+</body>
+</html>

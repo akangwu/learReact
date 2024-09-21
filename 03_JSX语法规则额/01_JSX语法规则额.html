@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JSX 语法规则</title>
+  <style>
+    .title{
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="test"></div>
+
+<!--引入react核心库-->
+  <script src="../js/react.development.js"></script>
+<!--引入react-dom，用于支持react渲染DOM元素-->
+  <script src="../js/react-dom.development.js"></script>
+<!--引入babel，将es6代码转为es5代码。将jsx转换为js-->
+  <script src="../js/babel.min.js"></script>
+
+  <!--这里一定要写text/babel，否则babel无法识别jsx语法-->
+  <script type="text/babel">
+    const myId = 'aTgUiGu'
+    const myData = 'HEllo,rEaCt'
+  //1.创建虚拟DOM
+  const VDOM = (
+    <h1 id={myId.toLowerCase()} className="title">
+      <span style={{color:'red',fontSize:'30px'}}>{myData.toLowerCase()}</span>
+    </h1>
+  ) //这里一定不要写引号，因为不是字符串，而是jsx语法，所以直接写即可
+  //2.渲染虚拟DOM到页面
+    ReactDOM.render(VDOM, document.getElementById('test')) //ReactDOM.render 是封装好的api
+
+    /*
+      JSX语法规则：
+      1.创建虚拟DOM时，标签名，属性，内容，都是js表达式，不要写引号
+      2.标签中只能有一个根标签，如果要换行，需要用括号包裹，并且，换行后的第一个标签，必须作为根标签
+      3.标签中不能使用变量，表达式，js代码，js表达式需要用{}包裹
+      4.样式的类名需要改变：class => className
+      5.style => style={{color:'red',fontSize:'30px'}}。fontSize 需要写成驼峰，不能是font-size
+      6.key => 列表渲染中，必须给列表中的每一个元素添加key
+      7.JSX需要有一个根标签，否则会报错
+      8.标签必须闭合：input => <input />，span => <span></span>
+      9.不能使用html中不存在的标签。比如<good></good>。如果是这样React会认为这个是组件，组件需要首字母大写，变成这种形式<Good></Good>
+*/
+  </script>
+
+</body>
+</html>

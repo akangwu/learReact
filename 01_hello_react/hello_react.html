@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Hello React</title>
+</head>
+<body>
+  <div id="test"></div>
+
+<!--引入react核心库-->
+  <script src="../js/react.development.js"></script>
+<!--引入react-dom，用于支持react渲染DOM元素-->
+  <script src="../js/react-dom.development.js"></script>
+<!--引入babel，将es6代码转为es5代码。将jsx转换为js-->
+  <script src="../js/babel.min.js"></script>
+
+  <!--这里一定要写text/babel，否则babel无法识别jsx语法-->
+  <script type="text/babel">
+  //1.创建虚拟DOM
+  const VDOM = <h1>Hello, React</h1> //这里一定不要写引号，因为不是字符串，而是jsx语法，所以直接写即可
+  //2.渲染虚拟DOM到页面
+    ReactDOM.render(VDOM, document.getElementById('test')) //ReactDOM.render 是封装好的api
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>State的简写方式</title>
+  <style>
+    .title{
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<div id="test"></div>
+
+<!--引入react核心库-->
+<script src="../js/react.development.js"></script>
+<!--引入react-dom，用于支持react渲染DOM元素-->
+<script src="../js/react-dom.development.js"></script>
+<!--引入babel，将es6代码转为es5代码。将jsx转换为js-->
+<script src="../js/babel.min.js"></script>
+
+<!--这里一定要写text/babel，否则babel无法识别jsx语法-->
+<script type="text/babel">
+  class Person extends React.Component{
+
+    render(){ //render每次调用的时候，都会重新调用。1+n次
+      const {name, age, sex} = this.props
+      return (
+        <ul>
+          <li>姓名：{name}</li>
+          <li>性别：{sex}</li>
+          <li>年龄：{age}</li>
+        </ul>
+      )
+    }
+  }
+  const p = {name: '小明6', age: 18,sex: '男'}
+  //2.渲染组件到页面 MyComponent需要大写，如果不写的话，React会认为这个是标签，而不是组件
+  ReactDOM.render(<Person {...p} />, document.getElementById('test')) //...p是解构赋值，把p中的属性全部解构出来，传给Person组件
+</script>
+
+</body>
+</html>
