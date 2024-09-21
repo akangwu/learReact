@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>React中的事件处理</title>
+</head>
+<body>
+<div id="test"></div>
+
+<!--引入react核心库-->
+<script src="../js/react.development.js"></script>
+<!--引入react-dom，用于支持react渲染DOM元素-->
+<script src="../js/react-dom.development.js"></script>
+<!--引入babel，将es6代码转为es5代码。将jsx转换为js-->
+<script src="../js/babel.min.js"></script>
+
+<!--引入prop-types进行props数据类型的限制-->
+<script src="../js/prop-types.js"></script>
+
+<!--这里一定要写text/babel，否则babel无法识别jsx语法-->
+<script type="text/babel">
+  class Demo extends React.Component{
+    /*
+    * 1. 通过onXXX属性指定事件处理函数
+    *   a. React使用的是自定义合成事件，而不是使用原生的DOM事件--为了更好的兼容性
+    *   b. React中的事件是通过事件委托方式处理的。委托给组件最外层的元素--为了高效
+    * 2. 通过event.target.xxx获取事件源元素
+    *
+    *
+    * */
+
+
+
+    myRef = React.createRef()
+    myRef2 = React.createRef()
+
+    showData = () => {
+      alert(this.myRef.current.value)
+    }
+
+    showData2 = () => {
+      alert(this.myRef2.current.value)
+    }
+    render(){
+      return (
+        <div>
+          <input ref={this.myRef} type="text" placeholder="点击按钮提示数据"/>
+          <button onClick={this.showData}>点我提示左侧的数据</button>
+          <input ref={this.myRef2} type="text" placeholder="失去焦点提示数据" onBlur={this.showData2}/>
+        </div>
+      )
+    }
+
+  }
+  ReactDOM.render(<Demo />, document.getElementById('test')) //...p是解构赋值，把p中的属性全部解构出来，传给Person组件
+</script>
+
+</body>
+</html>
