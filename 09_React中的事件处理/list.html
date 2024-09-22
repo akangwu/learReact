@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkbox List Example</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .list-container {
+      border: 1px solid #ccc;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      height: 100px;
+      background-color: #fff;
+      margin-bottom: 10px;
+      padding: 0 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      position: relative; /* 添加相对定位 */
+    }
+
+    .left {
+      width: 30px;
+      height: 100%;
+      padding: 0 20px 0 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative; /* 添加相对定位 */
+      cursor: pointer; /* 添加鼠标指针 */
+    }
+
+    .right {
+      height: 100%;
+      flex: 1;
+      padding-left: 10px;
+      display: flex;
+      align-items: center; /* 垂直居中 */
+    }
+
+    .el-checkbox__inner {
+      width: 16px;
+      height: 16px;
+    }
+
+    .el-checkbox__label {
+      font-size: 14px;
+    }
+
+    .el-checkbox-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .el-checkbox-group .el-checkbox {
+      margin-right: 10px;
+    }
+
+    .el-checkbox-group .el-checkbox:last-child {
+      margin-right: 0;
+    }
+
+    .left::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 5px;
+      background-color: #f9f9f9; /* 设置间隙颜色 */
+    }
+  </style>
+</head>
+<body>
+<div id="app" class="list-container">
+  <el-checkbox v-model="isAllSelected" :indeterminate="isIndeterminate" @change="handleAllChange">全选</el-checkbox>
+  <div class="list-items">
+    <div v-for="(item, index) in items" :key="index" class="list-item">
+      <div class="left" @click="handleLeftClick(item)">
+        <el-checkbox v-model="item.checked" @change="handleItemChange(item)"></el-checkbox>
+      </div>
+      <div class="right">
+        Item {{ index + 1 }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      isAllSelected: false,
+      isIndeterminate: false,
+      items: [
+        { text: 'Item 1', checked: false },
+        { text: 'Item 2', checked: false },
+        { text: 'Item 3', checked: false }
+      ]
+    },
+    computed: {
+      // 计算属性用于确定全选状态
+      isAllSelectedComputed() {
+        return this.items.every(item => item.checked);
+      },
+      // 计算属性用于确定是否处于半选状态
+      isIndeterminateComputed() {
+        const allChecked = this.items.every(item => item.checked);
+        const noneChecked = this.items.every(item => !item.checked);
+        return !allChecked && !noneChecked;
+      }
+    },
+    watch: {
+      // 监听全选状态的变化
+      isAllSelectedComputed(newVal) {
+        this.isAllSelected = newVal;
+      },
+      // 监听半选状态的变化
+      isIndeterminateComputed(newVal) {
+        this.isIndeterminate = newVal;
+      }
+    },
+    methods: {
+      handleAllChange(val) {
+        this.items.forEach(item => {
+          item.checked = val;
+        });
+      },
+      handleItemChange(item) {
+        const allChecked = this.items.every(i => i.checked);
+        this.isAllSelected = allChecked;
+        this.isIndeterminate = this.items.some(i => i.checked) && !allChecked;
+      },
+      handleLeftClick(item) {
+        item.checked = !item.checked;
+        this.handleItemChange(item);
+      }
+    }
+  });
+</script>
+</body>
+</html>
